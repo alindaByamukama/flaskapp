@@ -1,0 +1,41 @@
+REQUEST
+@app.route("/example", methods=['GET','POST'])
+def example():
+    if request.method == 'POST':
+        #handle post request
+        pass
+    else:
+        # handle get request 
+        pass
+
+ACCESS FORM DATA
+@app.route("/login", methods=['POST'])
+def example():
+    username = request.form['username]
+    password = request.form['password]
+    # process form data
+
+ACCES URL PARAMS
+@app.route("/search")
+def search():
+    search_word = request.args.get('key','')
+    # process search word param
+
+ACCESS JSON DATA
+@app.route("/json_data", methods=['POST'])
+def json_data():
+    data = request.JSON
+    # process JSON data received
+
+ACCESSING FILE UPLOADS
+@app.route("/upload", methods=['POST'])
+def upload_file():
+    if 'file' in request.files:
+        file = request.files['file]
+        # process the upload file
+
+RETRIEVE COOKIES
+@app.route("/cookies")
+def cookies():
+    user_id = request.cookies.get('user_id)
+    # use the user_id retrieved from cookies
