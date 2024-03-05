@@ -16,5 +16,11 @@ def abaout():
 def posts():
     return 'This is where the posts will be ...'
 
+# dynamic route for viewing blog posts by post ID
+@app.route("/posts/<int:post_id>")
+def post_id():
+    # logic to recieve and display blog post with given post ID
+    return f'Blog Post #{post_id}'
+
 if __name__ == '__main__':
     app.run()
