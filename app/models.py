@@ -11,7 +11,7 @@ class User(db.Model):
     # the optional helper from python allows for a col to be empty or nullable
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
     # not a db field - high level view of the relationship between users and posts
-    posts: so.WriteOnly['Post'] = so.relationship(back_populates='author')
+    posts: so.Writeonly['Post'] = so.relationship(back_populates='author')
 
     # repr method tell python how to print objs of this class
     def __repr__(self):
