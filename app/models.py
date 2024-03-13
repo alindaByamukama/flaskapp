@@ -24,7 +24,7 @@ class Post(db.Model):
     # default func sets field to the value returned by the func
     timestamp: so.Mapped[datetime] = so.mapped_column(index=True, default=lambda: datetime.now(timezone.utc))
     # not all dbs create an index for fkeys
-    user_id: so.Mapped[int] = so.mapped_column(sa.ForeginKey(User.id), index=True)
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id), index=True)
 
     author: so.Mapped[User] = so.relationship(back_populates='posts')
 
