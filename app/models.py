@@ -11,7 +11,7 @@ from app import db
 @login.user_loader
 # the id being passed as an arg is a str
 def user_loader(id):
-    return db.session,get(User, int(id))
+    return db.session.get(User, int(id))
 
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
