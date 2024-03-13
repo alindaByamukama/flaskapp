@@ -1,3 +1,4 @@
+from app import login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timezone
@@ -5,6 +6,12 @@ from typing import Optional
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from app import db
+
+# user loader is registered with flask login with this decorator
+@login.user_loader
+# the id being passed as an arg is a str
+def user_loader(id):
+    return db.session,get(User, int(id))
 
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
