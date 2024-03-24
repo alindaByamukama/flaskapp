@@ -6,6 +6,7 @@ import sqlalchemy as sa
 from app import db
 from app.models import User
 from urllib.parse import urlsplit
+from app.forms import RegistrationForm
 
 @app.route('/')
 @app.route('/index')
@@ -53,3 +54,17 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratualtions, you are now a registerd user!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
