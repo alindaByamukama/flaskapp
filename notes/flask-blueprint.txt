@@ -1,0 +1,75 @@
+blog_app/
+|
+|__ auth/
+|   |__ templates/
+|   |   |__ users/
+|   |       |-- login.html
+|   |       |-- register.html
+|   |       |-- profile.html
+|   |   
+|   |-- __init__.py
+|   |-- auth_blueprint.py (blueprint implementation)
+|
+|-- forms.py
+|-- models.py (db associations)
+|
+|__ blog/
+|     |__ templates/
+|     |   |__ posts/
+|     |        |--post_list.html
+|     |        |--post_detail.html
+|     |--__init__.py
+|     |-- posts_blueprint.py (blueprint implementation)
+|        
+|__ static/
+|-- app.py (flask blueprint config)
+|-- config.py
+
+EXAMPLE OF BLUEPRINT implementation
+
+from flask import blueprint
+
+posts_blueprint = Blueprint('posts_blueprint',__name__)
+
+@post_blueprint.route("/posts")
+def posts():
+    return render_trmplate("posts.html")
+
+*APP.PY FILE EXAMPLE*
+
+from flask import Flask 
+from posts.views import posts
+
+app = Flask(__name__)
+app.register_blueprint(post_blueprint)
+
+*EXAMPLE: `posts_blueprint.py`*
+
+from flask import Blueprint, render_template
+
+posts_blueprint = Blueprint('posts_blueprint', __name__, template_folder='templates')
+
+@posts_blueprint.route("/posts")
+def post_list():
+    # retrieve posts from db
+    posts = [
+        ...
+    ]
+    return render_template('posts/post_list.html', posts=posts)
+
+@posts_blueprint.route("/posts/<int:post_id>")
+def post_detail():
+    # retrieve posts by post_id
+    post = {'title:f'Post {post_id}', 'content':f'Content for post {post_id}'}
+    return render_template('posts/post_detail.html', post=post)
+
+# import & register these bluerints in the app FILE
+
+from flask import Flask 
+from posts.posts_blueprint import posts_blueprint
+from auth.auth_blueprint improt auth_blueprint
+
+app = Flask(__name__)
+
+app.register_blueprint(posts_blueprint, url_prefix='/blog')
+app.register_blueprint(users_blueprint, url_prefix='/auth')
