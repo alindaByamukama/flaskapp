@@ -21,17 +21,7 @@ def index():
         flash('Your post is now live!')
         return redirect(url_for('index'))
 
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beatiful day in Jinja!'
-        },
-        {
-            'author': {'username': 'Martha'},
-            'body': 'Just watched Dune at Cineplex, so cool!'
-        }
-    ]
-    return render_template('index.html', title='Home', form=form, posts=posts)
+    return render_template('index.html', title='Home', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
