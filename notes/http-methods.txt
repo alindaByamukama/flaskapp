@@ -1,0 +1,34 @@
+GET
+@app.route("/articles", methods=['GET'])
+def get_articles():
+    # logic
+
+POST
+@app.route("/articles/create", methods=['POST'])
+def create_articles():
+    # logic
+
+PUT
+@app.route("/articles/UPDATE/<int:article_id>", methods=['PUT'])
+def article_id(article_id):
+    # logic
+
+DELETE
+@app.route("/articles/delete/<int:article_id>", methods=['DELETE'])
+def delete_articles(article_id):
+    # logic
+
+PATCH
+@app.route("/articles/edit/<int:article_id>", methods=['PATCH'])
+def edit_articles(article_id):
+    # logic
+
+MULITPLE METHODS
+@app.route("/articles/user/<int:user_id>", methods=['GET', 'PUT', 'DELETE'])
+def user(user_id):
+    if request.method == 'GET':
+        # logic
+    elif request.method == 'PUT':
+        # logic
+    elif request.method == 'DELETE':
+        # logic
