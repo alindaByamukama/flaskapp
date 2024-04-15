@@ -9,10 +9,18 @@ from urllib.parse import urlsplit
 from app.forms import RegistrationForm, EditProfileForm, PostForm
 from datetime import datetime, timezone
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is now live!')
+        return redirect(url_for('index'))
+
     posts = [
         {
             'author': {'username': 'John'},
@@ -23,7 +31,7 @@ def index():
             'body': 'Just watched Dune at Cineplex, so cool!'
         }
     ]
-    return render_template('index.html', title='Home', posts=posts)
+    return render_template('index.html', title='Home', form=form, posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -101,4 +109,3 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
-
