@@ -1,0 +1,11 @@
+ *USERS*
+# id - INTEGER
+username - VARCHAR (64)
+email - VARCHAR (120)
+password_hash - VARCHAR (128)
+
+*POSTS*
+# id - INTEGER
+body - VARCHAR (140)
+timestamp - DATETIME
+fk user_id - INTEGER (one to many relationship with users table)
