@@ -14,6 +14,19 @@ from hashlib import md5
 def user_loader(id):
     return db.session.get(User, int(id))
 
+# auxiliary table for followers
+followers = sa.Table(
+    # table name
+    'followers',
+    # where sql alchmey stores info on all db tables
+    db.metadata,
+    # pair of combined foreign keys -> a compound primary key
+    sa.Column('follower_id', sa.Integer, sa.ForeignKey('user.id'),
+              primary_key=True),
+    sa.Column('followed_id', sa.Integer, sa.ForeignKey('user.id'),
+              primary_key=True)
+)
+
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
