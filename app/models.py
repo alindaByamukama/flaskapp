@@ -71,6 +71,10 @@ class User(UserMixin, db.Model):
         back_populates='following'
     )
 
+    def follow(self, user):
+        if self.is_following(user):
+            self.following.add(user)
+
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     body: so.Mapped[str] = so.mapped_column(sa.String(140))
