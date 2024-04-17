@@ -78,9 +78,8 @@ class User(UserMixin, db.Model):
             self.following.remove(user)
             
     def is_following(self, user):
-        query = sa.select(sa.func.count()).select_from(
-            self.following.select().subquery())
-        return db.session.scalar(query)
+        query = self.select().where(User.id == user.id)
+        return db.session.scalar(query) is not None
     
     def followers_count(self):
         query = sa.select(sa.func.count()).select_from(
