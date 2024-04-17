@@ -105,7 +105,9 @@ class User(UserMixin, db.Model):
             # join the entries in the post table with the Post.author relationship
             # of_type - refer to right side of entity w/ Author or Follower alias
             .join(Post.author.of_type(Author))
-            .join(Author.followers.of_type(Follower))
+            .join(Author.followers.of_type(Follower), 
+            # preserves entries that have no match           
+                  isouter=True)
             # filter the posts by users followed by current user
             .where(Follower.id == self.id)
             # sort the results by post timestamp field in descending order
