@@ -56,12 +56,17 @@ class User(UserMixin, db.Model):
 
     # many to many followers relationship
     following: so.WriteOnlyMapped['User'] = so.relationship(
-        secondary=followers, primaryjoin=(followers.c.follower_id == id),
+        # secondary configures the association table
+        secondary=followers, 
+        # primaryjoin indicates the condition that links the entity to the assoc table
+        primaryjoin=(followers.c.follower_id == id),
+        # secondaryjoin indicates the condition that links the assoc table to the user
         secondaryjoin=(followers.c.followed_id == id),
         back_populates='followers'
     )
     followers: so.WriteOnlyMapped['User'] = so.relationship(
-        secondary=followers, primaryjoin=(followers.c.followed_id == id),
+        secondary=followers, 
+        primaryjoin=(followers.c.followed_id == id),
         secondaryjoin=(followers.c.follower_id == id),
         back_populates='following'
     )
