@@ -21,10 +21,8 @@ followers = sa.Table(
     # where sql alchmey stores info on all db tables
     db.metadata,
     # pair of combined foreign keys -> a compound primary key
-    sa.Column('follower_id', sa.Integer, sa.ForeignKey('user.id'),
-              primary_key=True),
-    sa.Column('followed_id', sa.Integer, sa.ForeignKey('user.id'),
-              primary_key=True)
+    sa.Column('follower_id', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
+    sa.Column('followed_id', sa.Integer, sa.ForeignKey('user.id'), primary_key=True)
 )
 
 class User(UserMixin, db.Model):
