@@ -114,6 +114,8 @@ class User(UserMixin, db.Model):
                 Follower.id == self.id,
                 Author.id == self.id,
                 ))
+            # to eliminate duplicates in results
+            .group_by(Post)
             # sort the results by post timestamp field in descending order
             .order_by(Post.timestamp.desc())
         )
