@@ -109,7 +109,11 @@ class User(UserMixin, db.Model):
             # preserves entries that have no match           
                   isouter=True)
             # filter the posts by users followed by current user
-            .where(Follower.id == self.id)
+            # includes own posts w/ compound condition specifying more than one option for post selection
+            .where(sa.or_(
+                Follower.id == self.id,
+                Author.id == self.id,
+                ))
             # sort the results by post timestamp field in descending order
             .order_by(Post.timestamp.desc())
         )
