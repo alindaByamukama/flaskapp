@@ -101,9 +101,8 @@ class User(UserMixin, db.Model):
             # join the entries in the post table with the Post.author relationship
             # of_type - refer to right side of entity w/ Author or Follower alias
             .join(Post.author.of_type(Author))
-            .join(Author.followers.of_type(Follower), 
-            # preserves entries that have no match           
-                  isouter=True)
+            # is outer = true -> preserves entries that have no match
+            .join(Author.followers.of_type(Follower), isouter=True)
             # filter the posts by users followed by current user
             # includes own posts w/ compound condition specifying more than one option for post selection
             .where(sa.or_(
