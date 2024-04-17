@@ -12,4 +12,10 @@ class UserModelCase(unittest.TestCase):
     def setUp(self) -> None:
         self.app_context = app.app_context()
         self.app_context.push()
+        # creates all db table
         db.create_all()
+
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()
+        self.app_context.pop()
