@@ -95,14 +95,20 @@ class User(UserMixin, db.Model):
             self.following.select().subquery())
         return db.session.scalar(query)
     
-    def follwing_post(self):
+    def following_posts(self):
+        # creates refs to users as authors and as followers
         Author = so.aliased(User)
         Follower = so.aliased(User)
         return (
+            # defines the entity that needs to be obtained
             sa.select(Post)
+            # join the entries in the post table with the Post.author relationship
+            # of_type - refer to right side of entity w/ Author or Follower alias
             .join(Post.author.of_type(Author))
             .join(Author.followers.of_type(Follower))
+            # filter the posts by users followed by current user
             .where(Follower.id == self.id)
+            # sort the results by post timestamp field in descending order
             .order_by(Post.timestamp.desc())
         )
 
