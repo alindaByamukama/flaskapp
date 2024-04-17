@@ -19,3 +19,9 @@ class UserModelCase(unittest.TestCase):
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
+
+    def test_password_hashing(self):
+        u = User(username='julia', email='julia@example.com')
+        u.set_password('joycat')
+        self.assertFalse(u.check_password('jakedog'))
+        self.assertTrue(u.check_password('joycat'))
