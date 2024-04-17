@@ -70,7 +70,7 @@ class User(UserMixin, db.Model):
     )
 
     def follow(self, user):
-        if self.is_following(user):
+        if not self.is_following(user):
             self.following.add(user)
 
     
