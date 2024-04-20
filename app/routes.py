@@ -6,7 +6,7 @@ import sqlalchemy as sa
 from app import db
 from app.models import User, Post
 from urllib.parse import urlsplit
-from app.forms import RegistrationForm, EditProfileForm, PostForm
+from app.forms import RegistrationForm, EditProfileForm, PostForm, EmptyForm
 from datetime import datetime, timezone
 
 @app.route('/', methods=['GET', 'POST'])
@@ -76,7 +76,8 @@ def user(username):
         {'author': user, 'body': 'Test post #1'},
         {'author': user, 'body': 'Test post #2'}
     ]
-    return render_template('user.html', user=user, posts=posts)
+    form = EmptyForm()
+    return render_template('user.html', user=user, posts=posts, form=form)
 
 @app.before_request
 def before_request():
