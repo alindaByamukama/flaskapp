@@ -12,7 +12,7 @@
         </tr>
     </table>
         {% if user == current_user %}
-            <h1>User: {{ user.username </h1>
+            <h1>User: {{ user.username }} </h1>
             {% if user.about_me %} <p>{{ user.about_me }}</p> {% endif %}
             {% if user.last_seen %} <p>Last seen on: {{ user.last_seen }}</p> {% endif %}
             <p>{{ user.follower_count() }} followers, {{ user.following_count() }} following.</p>
