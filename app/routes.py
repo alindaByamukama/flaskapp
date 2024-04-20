@@ -24,6 +24,14 @@ def index():
     posts = db.paginate(current_user.following_posts(), page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
     return render_template('index.html', title='Home', form=form, posts=posts.items)
 
+@app.route('/explore')
+@login_required
+def explore():
+    query = sa.select(Post).order_by(Post.timestamp.desc())
+    posts = db.session.scalars(query).all()
+    # reused the index template, did not include the form arg
+    return render_template('index.html', title='Explore', posts=posts)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # in case the user is already logged in they are redirected to index
@@ -141,11 +149,3 @@ def unfollow(username):
         return redirect(url_for('user', username=username))
     else:
         return redirect(url_for('index'))
-    
-@app.route('/explore')
-@login_required
-def explore():
-    query = sa.select(Post).order_by(Post.timestamp.desc())
-    posts = db.session.scalars(query).all()
-    # reused the index template, did not include the form arg
-    return render_template('index.html', title='Explore', posts=posts)
