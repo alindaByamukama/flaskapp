@@ -49,3 +49,11 @@ class EditProfileForm(FlaskForm):
                 User.username == self.username.data))
             if user is not None:
                 raise ValidationError('Please use a different username.')
+            
+class PostForm(FlaskForm):
+    post = TextAreaField('Say something', validators=[
+        DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('Submit')
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
