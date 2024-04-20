@@ -6,4 +6,4 @@ class Config:
     # config env var and fallback value
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
-    POSTS_PER_PAGE = 3
+    POSTS_PER_PAGE = 25
