@@ -28,7 +28,7 @@ def index():
 @login_required
 def explore():
     query = sa.select(Post).order_by(Post.timestamp.desc())
-    posts = db.session.scalars(query).all()
+    posts = db.paginate(query, page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
     # reused the index template, did not include the form arg
     return render_template('index.html', title='Explore', posts=posts)
 
